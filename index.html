@@ -74,6 +74,27 @@
         .birthday-input:focus-visible { outline: 3px solid rgba(217, 78, 113, 0.35); border-color: #d94e71; }
         .gate-error { min-height: 1.5em; margin: 0; color: #a52f4b; font-size: 0.88rem; }
         .celebration { text-align: center; }
+        .archery-stage { padding: 10px 0 28px; }
+        .archery-intro { max-width: 560px; margin: 0 auto 20px; color: #79505e; line-height: 1.7; }
+        .archery-playfield { position: relative; max-width: 680px; margin: 0 auto; }
+        .archery-scene { display: block; width: 100%; height: auto; overflow: visible; touch-action: none; user-select: none; }
+        .archery-target-ring { fill: rgba(255,255,255,.55); stroke: #efa0b3; stroke-width: 3; stroke-dasharray: 7 7; }
+        .archery-target-heart { fill: #ef4772; filter: drop-shadow(0 0 14px rgba(239,71,114,.5)); transform-box: fill-box; transform-origin: center; }
+        .archery-target-heart.heart-burst { animation: heart-burst 450ms ease-out forwards; }
+        .archery-aim-line { stroke: rgba(199,91,122,.5); stroke-width: 3; stroke-dasharray: 7 9; }
+        .archery-arrow-drag { cursor: grab; outline: none; touch-action: none; }
+        .archery-arrow-drag:active { cursor: grabbing; }
+        .archery-arrow-drag:focus-visible .archery-arrow { filter: drop-shadow(0 0 7px #c83f60); }
+        .archery-arrow-hitbox { stroke: transparent; stroke-width: 28; pointer-events: stroke; }
+        .bow-curve { fill: none; stroke: #9d563b; stroke-width: 11; stroke-linecap: round; }
+        .bow-string { stroke: #77515b; stroke-width: 2; }
+        .bow-grip { fill: #d89162; stroke: #8d4d37; stroke-width: 3; }
+        .archery-arrow { stroke: #77515b; stroke-width: 5; stroke-linecap: round; marker-end: url(#archery-arrowhead); }
+        .archery-ground { stroke: rgba(194,112,137,.32); stroke-width: 3; stroke-linecap: round; }
+        .archery-svg-label { fill: #8e5363; font: 700 16px 'Poppins', sans-serif; text-anchor: middle; }
+        .archery-status { min-height: 1.6em; margin: 8px 0 0; color: #a33a58; font-weight: 600; }
+        .archery-hint { margin: 4px auto 0; color: #79505e; font-size: .88rem; }
+        .love-fall { position: absolute; z-index: 2; top: var(--love-y); left: var(--love-x); font-size: var(--love-size); line-height: 1; pointer-events: none; animation: love-fall 2s ease-in forwards; }
         .hero-celebration { padding: clamp(16px, 5vw, 40px) 0 30px; }
         .hero-sparkles { margin-bottom: 6px; font-size: clamp(2.5rem, 10vw, 4.5rem); animation: pulse 700ms ease-in-out infinite alternate; }
         .hero-title {
@@ -91,21 +112,18 @@
         .stage-heading { margin: 0 0 18px; color: #c83f60; font-size: clamp(1.35rem, 5vw, 1.8rem); }
         .forward-button { margin-top: 24px; }
         .music-status { min-height: 1.5em; margin: 10px 0 0; color: #79505e; font-size: .85rem; }
-        .photo-grid { max-width: 620px; margin: 0 auto; }
-        .photo-frame { position: relative; overflow: hidden; border-radius: 16px; }
-        .photo-item { display: block; height: clamp(140px, 30vw, 220px); }
+        .photo-grid { max-width: 680px; margin: 0 auto; }
+        .photo-frame { position: relative; overflow: hidden; margin: 0; border: 1px solid rgba(255,255,255,.85); border-radius: 16px; background: rgba(255,255,255,.78); box-shadow: 0 8px 24px rgba(174,67,100,.08); }
+        .photo-item { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; border: 3px solid #fff; background: #f8c4d1; object-fit: contain; }
         .photo-caption {
-            position: absolute;
-            right: 8px;
-            bottom: 8px;
-            left: 8px;
-            padding: 6px 8px;
-            border-radius: 9px;
-            background: rgba(255,255,255,.84);
+            display: block;
+            padding: 10px 8px;
             color: #79505e;
             font-size: .75rem;
             font-weight: 600;
+            text-align: center;
         }
+        .memory-video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; background: #1a1625; object-fit: contain; }
 
         .wish-card {
             max-width: 620px;
@@ -168,9 +186,8 @@
         .celebrate-btn:focus-visible { outline: 3px solid #9b3450; outline-offset: 3px; }
 
         .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
-        .photo-item { width: 100%; border: 3px solid #fff; background: #f8c4d1; box-shadow: 0 5px 14px rgba(83, 39, 53, 0.1); object-fit: cover; transition: transform 220ms ease; }
-        .photo-frame:nth-child(-n + 2) .photo-item { object-position: center 18%; }
-        .photo-item:hover { transform: scale(1.035) rotate(-1deg); }
+        .photo-item { transition: transform 220ms ease; }
+        .photo-frame .photo-item:hover { transform: scale(1.015); }
 
         .gift-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 620px; margin: 0 auto; }
         .gift-card { overflow: hidden; border: 1px solid rgba(255,255,255,.85); border-radius: 18px; background: rgba(255,255,255,.78); box-shadow: 0 8px 24px rgba(174,67,100,.1); }
@@ -180,10 +197,8 @@
         .gift-card .celebrate-btn { display: inline-block; margin-bottom: 0; text-decoration: none; }
         .gift-confirmation { max-width: 620px; margin: 22px auto 0; }
         .gift-confirmation p { margin: 0 0 12px; }
-        .cake-image-frame { position: relative; width: min(100%, 390px); margin: 0 auto 20px; }
+        .cake-image-frame { width: min(100%, 390px); margin: 0 auto 20px; }
         .cake-photo { display: block; width: 100%; border: 4px solid #fff; border-radius: 22px; box-shadow: 0 12px 30px rgba(83,39,53,.18); }
-        .candle-smoke { position: absolute; top: 21%; left: 23%; width: 54%; height: 29%; border-radius: 50%; opacity: 0; background: radial-gradient(ellipse at center, rgba(120,112,99,.98) 0%, rgba(120,112,99,.96) 80%, rgba(120,112,99,.9) 95%, transparent 100%); filter: blur(5px); pointer-events: none; transition: opacity 900ms ease; }
-        .cake-stage.candles-out .candle-smoke { opacity: 1; }
         .cake-wish { margin-top: 18px; color: #a33a58; font-family: 'Dancing Script', cursive; font-size: clamp(1.7rem, 6vw, 2.5rem); font-weight: 700; line-height: 1.4; text-align: center; }
 
         .audio-player-container {
@@ -194,6 +209,16 @@
         }
 
         .audio-track-info { margin-bottom: 9px; color: #c83f60; font-size: 0.88rem; font-weight: 600; }
+        .song-reveal-copy { margin: 0 auto 18px; color: #79505e; line-height: 1.7; }
+        .song-reveal-card { max-width: 500px; margin: 0 auto; padding: 22px; border: 1px solid rgba(255,255,255,.85); border-radius: 20px; background: rgba(255,255,255,.68); }
+        .song-reveal-icon { margin-bottom: 10px; font-size: 3rem; }
+        .cutiepie-intro { max-width: 580px; margin: 0 auto 24px; color: #79505e; line-height: 1.8; }
+        .photo-grid.cutiepie-grid { max-width: 560px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .cutiepie-card { position: relative; }
+        .photo-item.cutiepie-photo { aspect-ratio: 768 / 1365; }
+        .cutiepie-caption { color: #c83f60; font-family: 'Dancing Script', cursive; font-size: 1.35rem; }
+        .cutiepie-heart { position: absolute; top: 10px; right: 10px; z-index: 1; font-size: clamp(1.2rem, 5vw, 1.8rem); filter: drop-shadow(0 2px 3px rgba(50,20,30,.45)); pointer-events: none; animation: pulse 1.4s ease-in-out infinite alternate; }
+        .cutiepie-card:nth-child(even) .cutiepie-heart { animation-delay: 350ms; }
         .photo-note {
             max-width: 620px;
             margin: 0 auto 18px;
@@ -206,6 +231,117 @@
             line-height: 1.6;
         }
         audio { display: block; width: 100%; height: 42px; }
+
+        .letter-card { max-width: 620px; margin: 0 auto; }
+        .letter-paragraph { opacity: 0; transform: translateY(12px); transition: opacity 800ms ease, transform 800ms ease; }
+        .letter-paragraph.is-visible { opacity: 1; transform: translateY(0); }
+        .ending-stage {
+            position: fixed;
+            z-index: 10;
+            inset: 0;
+            display: grid;
+            min-height: 100vh;
+            min-height: 100svh;
+            place-items: end center;
+            overflow: hidden;
+            padding: clamp(14px, 4vh, 28px);
+            background-color: #000;
+            background-image: linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.32));
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff8fb;
+            text-align: center;
+            animation: ending-fade-to-black 1.8s ease both;
+        }
+        .ending-stage::before { position: absolute; z-index: 0; inset: -18px; background: url("ending-photo.png") center / cover no-repeat; content: ""; filter: blur(16px) brightness(.42); transform: scale(1.04); }
+        .ending-photo { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; filter: brightness(.86) saturate(.92); }
+        .ending-content { position: relative; z-index: 5; width: min(100%, 760px); margin-bottom: clamp(8px, 4vh, 32px); }
+        .ending-fireworks-canvas { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .ending-fireworks-source { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .05; pointer-events: none; }
+        .ending-cracker {
+            position: absolute;
+            z-index: 4;
+            top: clamp(52px, 9vh, 92px);
+            width: 1px;
+            height: 1px;
+            color: #ffd166;
+            pointer-events: none;
+        }
+        .ending-cracker-left { left: clamp(42px, 12vw, 150px); }
+        .ending-cracker-right { right: clamp(42px, 12vw, 150px); color: #ff8fab; }
+        .ending-cracker::before {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 12px 4px currentColor, 0 0 36px 12px rgba(255, 255, 255, .45);
+            content: "";
+            transform: translate(-50%, -50%);
+            animation: cracker-flash 2.4s ease-out infinite;
+        }
+        .ending-cracker::after {
+            position: absolute;
+            bottom: -38px;
+            left: 0;
+            width: 2px;
+            height: 34px;
+            background: linear-gradient(to bottom, transparent, currentColor);
+            content: "";
+            opacity: 0;
+            transform: translateY(24px);
+            animation: cracker-launch 2.4s ease-out infinite;
+        }
+        .ending-cracker span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 16px;
+            border-radius: 999px;
+            background: currentColor;
+            box-shadow: 0 0 9px 2px currentColor;
+            opacity: 0;
+            transform-origin: center 0;
+            animation: cracker-spark 2.4s ease-out infinite;
+        }
+        .ending-cracker span:nth-child(2n) { color: #fff0a6; }
+        .ending-cracker-right span:nth-child(2n) { color: #ffd1dc; }
+        .ending-cracker span:nth-child(1) { --spark-angle: 0deg; }
+        .ending-cracker span:nth-child(2) { --spark-angle: 45deg; }
+        .ending-cracker span:nth-child(3) { --spark-angle: 90deg; }
+        .ending-cracker span:nth-child(4) { --spark-angle: 135deg; }
+        .ending-cracker span:nth-child(5) { --spark-angle: 180deg; }
+        .ending-cracker span:nth-child(6) { --spark-angle: 225deg; }
+        .ending-cracker span:nth-child(7) { --spark-angle: 270deg; }
+        .ending-cracker span:nth-child(8) { --spark-angle: 315deg; }
+        .ending-cracker-right::before, .ending-cracker-right::after,
+        .ending-cracker-right span { animation-delay: 1.2s; }
+        @keyframes cracker-launch {
+            0%, 12% { opacity: 0; transform: translateY(24px); }
+            24% { opacity: .9; }
+            48%, 100% { opacity: 0; transform: translateY(-16px); }
+        }
+        @keyframes cracker-flash {
+            0%, 32%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.2); }
+            40% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+            52% { opacity: .75; transform: translate(-50%, -50%) scale(.8); }
+        }
+        @keyframes cracker-spark {
+            0%, 35%, 100% { opacity: 0; transform: rotate(var(--spark-angle)) translateY(0) scale(.2); }
+            43% { opacity: 1; }
+            70% { opacity: .8; transform: rotate(var(--spark-angle)) translateY(-48px) scale(1); }
+        }
+        .ending-line { margin: 0; color: #fff8fb; font-family: 'Dancing Script', cursive; font-size: clamp(1.65rem, 5vw, 3.2rem); line-height: 1.25; text-shadow: 0 3px 28px rgba(0,0,0,.45); opacity: 0; transform: translateY(12px); transition: opacity 1.8s ease, transform 1.8s ease; }
+        .ending-final-line { margin-top: clamp(14px, 3vh, 30px); font-size: clamp(1.5rem, 4vw, 2.5rem); }
+        .ending-stage.is-revealed #ending-line, .ending-stage.is-final-revealed #ending-final-line { opacity: 1; transform: translateY(0); }
+        .ending-replay { margin-top: 34px; padding: 10px 17px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; background: rgba(255,255,255,.1); color: #fff; cursor: pointer; font: inherit; font-size: .84rem; letter-spacing: .02em; opacity: 0; transition: opacity 700ms ease, background 180ms ease; }
+        .ending-replay.is-visible { opacity: 1; }
+        .ending-replay:hover { background: rgba(255,255,255,.2); }
+        .ending-replay:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+        body.cinematic-mode { overflow: hidden; }
+        body.cinematic-mode .main-card { transform: none; animation: none; border-color: transparent; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
         @keyframes fade-in {
             from { opacity: 0; transform: translateY(16px); }
@@ -223,16 +359,46 @@
             100% { opacity: 1; transform: scale(1) rotate(0); }
         }
 
-        @media (max-width: 375px) {
+        @keyframes heart-burst {
+            0% { opacity: 1; transform: scale(1); }
+            35% { opacity: 1; transform: scale(1.35); }
+            100% { opacity: 0; transform: scale(.15); }
+        }
+
+        @keyframes love-fall {
+            to { opacity: 0; transform: translateY(360px) rotate(28deg); }
+        }
+
+        @keyframes ending-fade-to-black {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
             body { padding: 16px 10px; }
             .main-card { padding: 24px 15px; }
             .main-card { margin-top: 1vh; }
-            .photo-item { height: 130px; }
-            .photo-caption { font-size: .68rem; }
+            .photo-item, .memory-video { aspect-ratio: 9 / 16; }
+            .photo-caption { padding: 8px 6px; font-size: .68rem; }
+            .photo-grid.cutiepie-grid { gap: 12px; }
+            .cutiepie-caption { font-size: 1.15rem; }
+            .ending-stage { padding: 20px; }
+        }
+
+        @media (max-height: 600px) {
+            .ending-stage { padding: 12px; }
+            .ending-line { font-size: clamp(1.35rem, 6vh, 2.2rem); line-height: 1.2; }
+            .ending-final-line { margin-top: 14px; font-size: clamp(1.25rem, 5vh, 1.8rem); }
+            .ending-replay { margin-top: 16px; }
+        }
+
+        @media (min-width: 620px) {
+            .photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+            .ending-cracker span { animation: none !important; opacity: .9; transform: rotate(var(--spark-angle)) translateY(-26px); }
         }
     </style>
 </head>
@@ -251,6 +417,41 @@
         </section>
 
         <div class="celebration" id="celebration" hidden>
+            <section class="stage-section archery-stage" id="archery-stage" aria-labelledby="archery-title" hidden>
+                <div class="hearts-box" aria-hidden="true">💘🏹💖</div>
+                <h1 class="stage-heading" id="archery-title">A little love is waiting for you 💝</h1>
+                <p class="archery-intro">Pull the arrow back from the bow, then let go. Watch it fly straight into the floating heart 💕</p>
+                <div class="archery-playfield" id="archery-playfield">
+                    <svg class="archery-scene" id="archery-scene" viewBox="0 0 720 360" role="group" aria-labelledby="archery-svg-title archery-svg-desc">
+                        <title id="archery-svg-title">A heart and a bow-and-arrow love game</title>
+                        <desc id="archery-svg-desc">Pull the arrow back from the bow and release it to send it flying into the glowing heart. Keyboard users can focus the arrow, press the left arrow key to pull back, and press Enter to release.</desc>
+                        <defs>
+                            <marker id="archery-arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#77515b"></path>
+                            </marker>
+                        </defs>
+                        <path class="archery-ground" d="M32 324 Q360 315 688 324"></path>
+                        <circle class="archery-target-ring" cx="585" cy="128" r="62"></circle>
+                        <g id="archery-target" aria-hidden="true">
+                            <path class="archery-target-heart" id="archery-target-heart" d="M0 36 C-10 26 -38 5 -38 -14 C-38 -39 -8 -43 0 -19 C8 -43 38 -39 38 -14 C38 5 10 26 0 36Z" transform="translate(585 128)"></path>
+                        </g>
+                        <line class="archery-aim-line" id="archery-aim-line" x1="165" y1="260" x2="540" y2="142"></line>
+                        <g class="archery-bow" id="archery-bow" transform="translate(125 260)" aria-hidden="true">
+                            <path class="bow-curve" d="M18 -60 Q78 0 18 60"></path>
+                            <path class="bow-string" id="bow-string" d="M18 -60 Q18 0 18 60"></path>
+                            <rect class="bow-grip" x="7" y="-13" width="22" height="26" rx="8"></rect>
+                        </g>
+                        <g class="archery-arrow-drag" id="archery-arrow-drag" transform="translate(145 260) rotate(-17)" tabindex="0" role="slider" aria-label="Pull back the arrow and release it to hit the heart" aria-describedby="archery-svg-desc" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Arrow ready; pull it back">
+                            <line class="archery-arrow-hitbox" x1="-8" y1="0" x2="70" y2="0"></line>
+                            <line class="archery-arrow" id="archery-arrow" x1="0" y1="0" x2="64" y2="0"></line>
+                        </g>
+                    </svg>
+                    <div id="love-fall-layer" aria-hidden="true"></div>
+                </div>
+                <p class="archery-status" id="archery-status" role="status" aria-live="polite">The heart is waiting—aim your bow at it 💗</p>
+                <p class="archery-hint">Drag the arrow backward, then release to shoot. Keyboard: ← to pull back, Enter to shoot.</p>
+            </section>
+
             <section class="hero-celebration" id="birthday-stage" aria-label="Birthday celebration" hidden>
                 <div class="hero-sparkles" aria-hidden="true">🎉🎂🎉</div>
                 <h1 class="hero-title">HAPPY BIRTHDAY<br>MY MESSY 🫂<br>🤗 ❤️ 🫶!</h1>
@@ -270,29 +471,75 @@
                     <p>May this year bring you beautiful surprises, exciting adventures, and everything you’ve been wishing for. Never stop being your amazing self.</p>
                     <p class="signature">Love you lots, your bestie ✨🫶</p>
                 </div>
-                <button class="celebrate-btn forward-button" id="to-memories" type="button">Move forward to your song &amp; pictures 🎵</button>
+                <button class="celebrate-btn forward-button" id="to-story" type="button">Meet my lovely cutiepie 💕</button>
+            </section>
+
+            <section class="stage-section" id="story-stage" aria-labelledby="story-title" hidden>
+                <div class="hearts-box" aria-hidden="true">💕🤗🎀</div>
+                <h2 class="stage-heading" id="story-title">My Lovely Cutiepie 💕</h2>
+                <p class="cutiepie-intro">A little collection of my favorite pictures of you. Every smile makes my heart a little happier 🤗🎀</p>
+                <div class="photo-grid cutiepie-grid">
+                    <figure class="photo-frame cutiepie-card">
+                        <span class="cutiepie-heart" aria-hidden="true">💗</span>
+                        <img class="photo-item cutiepie-photo" src="memories/cutiepie-1.jpg" alt="Pic 1, my lovely cutiepie in a peach and blue outfit" loading="lazy">
+                        <figcaption class="photo-caption cutiepie-caption">my MESSY 💕</figcaption>
+                    </figure>
+                    <figure class="photo-frame cutiepie-card">
+                        <span class="cutiepie-heart" aria-hidden="true">💖</span>
+                        <img class="photo-item cutiepie-photo" src="memories/cutiepie-2.jpg" alt="Pic 2, my lovely cutiepie in a blue outfit" loading="lazy">
+                        <figcaption class="photo-caption cutiepie-caption">my BNGRM 🤗</figcaption>
+                    </figure>
+                    <figure class="photo-frame cutiepie-card">
+                        <span class="cutiepie-heart" aria-hidden="true">💝</span>
+                        <img class="photo-item cutiepie-photo" src="memories/cutiepie-3.jpg" alt="Pic 3, my lovely cutiepie among pink flowers" loading="lazy">
+                        <figcaption class="photo-caption cutiepie-caption">my MUMMA 🎀</figcaption>
+                    </figure>
+                    <figure class="photo-frame cutiepie-card">
+                        <span class="cutiepie-heart" aria-hidden="true">💗</span>
+                        <img class="photo-item cutiepie-photo" src="memories/cutiepie-4.jpg" alt="Pic 4, a smiling portrait of my lovely cutiepie" loading="lazy">
+                        <figcaption class="photo-caption cutiepie-caption">my LOVLY HEADACHE 💞</figcaption>
+                    </figure>
+                </div>
+                <button class="celebrate-btn forward-button" id="to-song" type="button">A song just for you 🎵</button>
+            </section>
+
+            <section class="stage-section" id="song-stage" aria-labelledby="song-title" hidden>
+                <div class="hearts-box" aria-hidden="true">🎶💌🎂</div>
+                <h2 class="stage-heading" id="song-title">A birthday song, just for you 💕</h2>
+                <div class="song-reveal-card">
+                    <div class="song-reveal-icon" aria-hidden="true">🎁🎵</div>
+                    <p class="song-reveal-copy">A little birthday tune, just for you 🎶💖</p>
+                    <div class="audio-player-container">
+                        <div class="audio-track-info">🎵 Happy Birthday, MESSY!</div>
+                        <p class="music-status" id="music-status" role="status" aria-live="polite">Your birthday song is starting… 🎶</p>
+                    </div>
+                </div>
+                <button class="celebrate-btn forward-button" id="to-memories" type="button">Continue to our memories 📸</button>
             </section>
 
             <section class="stage-section" id="memories-stage" aria-labelledby="memories-title" hidden>
-                <div class="hearts-box" aria-hidden="true">🎂🎶📸</div>
-                <h2 class="stage-heading" id="memories-title">A birthday song &amp; memories for you 💕</h2>
-                <div class="audio-player-container">
-                    <div class="audio-track-info">🎵 Happy Birthday, MESSY!</div>
-                    <button class="celebrate-btn" id="replay-song" type="button">▶ Play birthday song again</button>
-                    <p class="music-status" id="music-status" role="status" aria-live="polite">Your birthday song is ready! 🎶</p>
-                </div>
-                <h3 class="stage-heading" style="margin-top: 30px">📸 Our beautiful memories</h3>
+                <div class="hearts-box" aria-hidden="true">📸💖✨</div>
+                <h2 class="stage-heading" id="memories-title">Our beautiful memories 💕</h2>
                 <div class="photo-note">
                     <p>Birthday wish: May your day be as lovely, bright, and unforgettable as you are. You deserve all the happiness in the world! 🎂💖</p>
                     <p>Flirty thought: Is it your birthday, or did the world just get a little more beautiful today? 😉✨</p>
                     <p>One more wish: May this year bring you sweet surprises, big smiles, and plenty of reasons to stay close to your favorite person (me, obviously 🤭💕).</p>
                 </div>
                 <div class="photo-grid">
-                    <div class="photo-frame"><img src="memories/photo-1.png" alt="A favorite memory together" class="photo-item" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&amp;fit=crop&amp;w=600&amp;q=80'"><span class="photo-caption">A day to remember ✨</span></div>
-                    <div class="photo-frame"><img src="memories/photo-2.png" alt="A happy moment with my bestie" class="photo-item" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&amp;fit=crop&amp;w=600&amp;q=80'"><span class="photo-caption">My favorite person 💕</span></div>
-                    <div class="photo-frame"><img src="memories/photo-3.png" alt="A lovely memory with my best friend" class="photo-item" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&amp;fit=crop&amp;w=600&amp;q=80'"><span class="photo-caption">Always making me smile 😊</span></div>
-                    <div class="photo-frame"><img src="memories/photo-4.png" alt="A special day together" class="photo-item" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&amp;fit=crop&amp;w=600&amp;q=80'"><span class="photo-caption">More memories to come 🌸</span></div>
+                    <figure class="photo-frame"><img src="memories/Snapchat-1286250603.jpg" alt="A photo with friends at a celebration" class="photo-item" loading="lazy"><figcaption class="photo-caption">A day to remember ✨</figcaption></figure>
+                    <figure class="photo-frame"><img src="memories/Snapchat-471866539.jpg" alt="A handwritten keepsake" class="photo-item" loading="lazy"><figcaption class="photo-caption">A little keepsake 💗</figcaption></figure>
+                    <figure class="photo-frame"><img src="memories/Snapchat-618683686.jpg" alt="A happy photo with friends" class="photo-item" loading="lazy"><figcaption class="photo-caption">Our favorite people 🫶</figcaption></figure>
+                    <figure class="photo-frame"><img src="memories/Snapchat-819046273.jpg" alt="A handwritten memory" class="photo-item" loading="lazy"><figcaption class="photo-caption">A doodle to remember ✍️</figcaption></figure>
+                    <figure class="photo-frame"><img src="memories/Snapchat-958309122.jpg" alt="A handwritten keepsake" class="photo-item" loading="lazy"><figcaption class="photo-caption">Sweet little memories 💕</figcaption></figure>
+                    <figure class="photo-frame">
+                        <video class="memory-video" controls autoplay loop muted playsinline preload="metadata" poster="memories/Snapchat-618683686.jpg" aria-label="A video from our memories">
+                            <source src="memories/Snapchat-1562052584.mp4" type="video/mp4">
+                            Your browser can't play this video. <a href="memories/Snapchat-1562052584.mp4">Open the video directly</a>.
+                        </video>
+                        <figcaption class="photo-caption">A little moment together 🎬</figcaption>
+                    </figure>
                 </div>
+                <p class="music-status" id="memory-video-status" role="status" aria-live="polite" hidden></p>
                 <button class="celebrate-btn forward-button" id="to-more" type="button">Move forward for one more surprise 💌</button>
             </section>
 
@@ -314,13 +561,11 @@
                 <h2 class="stage-heading" id="cake-title">A final birthday surprise 🎂</h2>
                 <figure class="cake-image-frame">
                     <img class="cake-photo" id="cake-lit-photo" src="cake-surprise.jpg" alt="Birthday cake with glowing candles">
-                    <div class="candle-smoke" aria-hidden="true"></div>
                 </figure>
-                <p class="music-status" id="cake-candle-status" role="status" aria-live="polite">Make a wish while the candles glow… 🕯️</p>
-                <div class="wish-card cake-wish" id="final-birthday-wish" hidden>
+                <div class="wish-card cake-wish">
                     We can't change our old chapters, but maybe we can make the next one beautiful. Happy Birthday, Bestie! ❤️🦋
                 </div>
-                <button class="celebrate-btn forward-button" id="to-gifts" type="button" hidden>Go to your gift section 🎁</button>
+                <button class="celebrate-btn forward-button" id="to-gifts" type="button">Go to your gift section 🎁</button>
             </section>
 
             <section class="stage-section" id="gifts-stage" aria-labelledby="gifts-title" hidden>
@@ -365,6 +610,33 @@
                     <p>Message me at <strong>+91 7989373949</strong></p>
                     <a class="celebrate-btn" id="gift-whatsapp" href="https://wa.me/917989373949" target="_blank" rel="noopener noreferrer">Open WhatsApp 💚</a>
                 </div>
+                <button class="celebrate-btn forward-button" id="open-letter" type="button">Wait… there's one thing I never told you 🥹</button>
+            </section>
+
+            <section class="stage-section" id="letter-stage" aria-labelledby="letter-title" hidden>
+                <div class="hearts-box" aria-hidden="true">💌✨🌙</div>
+                <h2 class="stage-heading" id="letter-title">A little something from my heart</h2>
+                <div class="wish-card letter-card" id="secret-letter" aria-live="polite">
+                    <p class="letter-paragraph" hidden>There's something I've kept tucked away behind all the jokes 🤭 and birthday wishes 🎂.</p>
+                    <p class="letter-paragraph" hidden>Those three quiet years never erased how much our friendship meant to me 🫂💗. Sometimes I wondered if we'd ever find our way back to those silly conversations 💬✨.</p>
+                    <p class="letter-paragraph" hidden>Now that we're talking again, I don't want to take a single laugh 😂, late-night chat 🌙💬, or little moment for granted. Having you in my life again feels like a gift all by itself 🎁❤️.</p>
+                    <p class="letter-paragraph" hidden>I care about you more than I know how to say 💞—and maybe, someday, I'll be brave enough to tell you just how much. Whatever comes next, I'm grateful it's a chapter we get to write together 🦋📖.</p>
+                    <p class="letter-paragraph signature" hidden>Happy birthday, my favorite person. I'm really glad you're here. 💗</p>
+                </div>
+                <button class="celebrate-btn forward-button" id="to-ending" type="button" hidden>One last thing… ✨</button>
+            </section>
+
+            <section class="ending-stage" id="ending-stage" aria-label="A final birthday message" hidden>
+                <img class="ending-photo" src="ending-photo.png" alt="">
+                <canvas class="ending-fireworks-canvas" id="ending-fireworks-canvas" aria-hidden="true"></canvas>
+                <video class="ending-fireworks-source" id="ending-fireworks-source" src="fireworks-overlay.mp4" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+                <div class="ending-cracker ending-cracker-left" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="ending-cracker ending-cracker-right" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="ending-content" aria-live="polite">
+                    <p class="ending-line" id="ending-line">You reached the end of this website… but I hope this isn't the end of the memories we make.</p>
+                    <p class="ending-line ending-final-line" id="ending-final-line" hidden>Happy birthday, MY MESSY. I'm glad you're in my life. ❤️</p>
+                    <button class="ending-replay" id="ending-replay" type="button" hidden>Read this again anytime</button>
+                </div>
             </section>
         </div>
     </main>
@@ -376,31 +648,38 @@
         const gateError = document.getElementById('gate-error');
         const gate = document.getElementById('birthday-gate');
         const celebration = document.getElementById('celebration');
+        const archeryStage = document.getElementById('archery-stage');
         const birthdayStage = document.getElementById('birthday-stage');
         const wishesStage = document.getElementById('wishes-stage');
+        const storyStage = document.getElementById('story-stage');
+        const songStage = document.getElementById('song-stage');
         const memoriesStage = document.getElementById('memories-stage');
+        const memoriesVideo = memoriesStage.querySelector('.memory-video');
+        const memoryVideoStatus = document.getElementById('memory-video-status');
         const moreStage = document.getElementById('more-stage');
         const cakeStage = document.getElementById('cake-stage');
         const giftsStage = document.getElementById('gifts-stage');
+        const letterStage = document.getElementById('letter-stage');
+        const endingStage = document.getElementById('ending-stage');
+        const endingFireworksVideo = document.getElementById('ending-fireworks-source');
+        const endingFireworksCanvas = document.getElementById('ending-fireworks-canvas');
+        const pageStages = [archeryStage, birthdayStage, wishesStage, storyStage, songStage, memoriesStage, moreStage, cakeStage, giftsStage, letterStage, endingStage];
         const musicStatus = document.getElementById('music-status');
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const cakeCandleStatus = document.getElementById('cake-candle-status');
-        const finalBirthdayWish = document.getElementById('final-birthday-wish');
-        let candleTimer;
-
-        function startCakeSurprise() {
-            window.clearTimeout(candleTimer);
-            cakeStage.classList.remove('candles-out');
-            finalBirthdayWish.hidden = true;
-            document.getElementById('to-gifts').hidden = true;
-            cakeCandleStatus.textContent = 'Make a wish while the candles glow… 🕯️';
-            candleTimer = window.setTimeout(() => {
-                cakeStage.classList.add('candles-out');
-                cakeCandleStatus.textContent = 'The candles are out—your wish is ready! ✨';
-                finalBirthdayWish.hidden = false;
-                document.getElementById('to-gifts').hidden = false;
-            }, 6000);
-        }
+        let letterTimers = [];
+        let endingReplayTimer;
+        let endingRevealTimers = [];
+        let endingFireworksRenderer;
+        let endingFireworksFrame = null;
+        let birthdayMusicGain;
+        let birthdayAudioContext;
+        let songTimeout;
+        let archeryAdvanceTimer;
+        let arrowPull = 0;
+        let arrowDragStart = null;
+        let arrowPullAtStart = 0;
+        let arrowDragging = false;
+        let archeryComplete = false;
 
         function burstConfetti() {
             if (typeof window.confetti !== 'function') return;
@@ -414,27 +693,326 @@
 
         document.getElementById('celebrate').addEventListener('click', burstConfetti);
 
+        const archeryScene = document.getElementById('archery-scene');
+        const archeryBow = document.getElementById('archery-bow');
+        const archeryArrowDrag = document.getElementById('archery-arrow-drag');
+        const archeryTargetHeart = document.getElementById('archery-target-heart');
+        const archeryArrow = document.getElementById('archery-arrow');
+        const archeryAimLine = document.getElementById('archery-aim-line');
+        const bowString = document.getElementById('bow-string');
+        const archeryStatus = document.getElementById('archery-status');
+        const loveFallLayer = document.getElementById('love-fall-layer');
+        const heartPosition = { x: 585, y: 128 };
+        const arrowOrigin = { x: 145, y: 260 };
+        const arrowDirection = { x: Math.cos(-17 * Math.PI / 180), y: Math.sin(-17 * Math.PI / 180) };
+        const arrowAngle = -17;
+
+        function updateArrowPull(pull) {
+            arrowPull = Math.max(0, Math.min(100, pull));
+            const x = arrowOrigin.x - arrowDirection.x * arrowPull;
+            const y = arrowOrigin.y - arrowDirection.y * arrowPull;
+            archeryArrowDrag.setAttribute('transform', `translate(${x} ${y}) rotate(${arrowAngle})`);
+            bowString.setAttribute('d', `M18 -60 Q${x - 125} ${y - 260} 18 60`);
+            archeryArrowDrag.setAttribute('aria-valuenow', Math.round(arrowPull));
+            archeryArrowDrag.setAttribute('aria-valuetext', `Arrow pulled back ${Math.round(arrowPull)} percent`);
+        }
+
+        function getArcheryPoint(event) {
+            const matrix = archeryScene.getScreenCTM();
+            if (!matrix) return null;
+            const point = archeryScene.createSVGPoint();
+            point.x = event.clientX;
+            point.y = event.clientY;
+            return point.matrixTransform(matrix.inverse());
+        }
+
+        function createEndingFireworksRenderer() {
+            const gl = endingFireworksCanvas.getContext('webgl', { alpha: true, premultipliedAlpha: true });
+            if (!gl) {
+                console.error('The closing fireworks overlay requires WebGL, which is unavailable in this browser.');
+                return null;
+            }
+
+            function compileShader(type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    const message = gl.getShaderInfoLog(shader);
+                    gl.deleteShader(shader);
+                    throw new Error(`Could not compile closing fireworks shader: ${message}`);
+                }
+                return shader;
+            }
+
+            const program = gl.createProgram();
+            gl.attachShader(program, compileShader(gl.VERTEX_SHADER, 'attribute vec2 position; varying vec2 textureCoordinate; void main() { textureCoordinate = (position + 1.0) * 0.5; gl_Position = vec4(position, 0.0, 1.0); }'));
+            gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float; varying vec2 textureCoordinate; uniform sampler2D videoFrame; void main() { vec3 color = texture2D(videoFrame, textureCoordinate).rgb; float greenScreen = color.g - max(color.r, color.b); float alpha = 1.0 - smoothstep(0.08, 0.30, greenScreen); alpha *= smoothstep(0.015, 0.08, max(color.r, max(color.g, color.b))); gl_FragColor = vec4(color * alpha, alpha); }'));
+            gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                throw new Error(`Could not link closing fireworks shader: ${gl.getProgramInfoLog(program)}`);
+            }
+
+            gl.useProgram(program);
+            const vertices = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertices);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+            const position = gl.getAttribLocation(program, 'position');
+            gl.enableVertexAttribArray(position);
+            gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+            const texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+            gl.uniform1i(gl.getUniformLocation(program, 'videoFrame'), 0);
+
+            return { gl, texture };
+        }
+
+        function configureEndingFireworksCanvas() {
+            const { gl } = endingFireworksRenderer;
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+            const width = Math.max(1, Math.round(endingStage.clientWidth * pixelRatio));
+            const height = Math.max(1, Math.round(endingStage.clientHeight * pixelRatio));
+            if (endingFireworksCanvas.width !== width || endingFireworksCanvas.height !== height) {
+                endingFireworksCanvas.width = width;
+                endingFireworksCanvas.height = height;
+            }
+            gl.viewport(0, 0, width, height);
+            return true;
+        }
+
+        function renderEndingFireworks() {
+            if (endingStage.hidden || endingFireworksVideo.paused) {
+                endingFireworksFrame = null;
+                return;
+            }
+
+            const { gl, texture } = endingFireworksRenderer;
+            configureEndingFireworksCanvas();
+            if (endingFireworksVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, endingFireworksVideo);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            }
+            endingFireworksFrame = window.requestAnimationFrame(renderEndingFireworks);
+        }
+
+        function playEndingFireworks() {
+            endingFireworksRenderer ||= createEndingFireworksRenderer();
+            if (!endingFireworksRenderer) return;
+            configureEndingFireworksCanvas();
+            endingFireworksVideo.play().then(() => {
+                if (endingFireworksFrame === null) {
+                    endingFireworksFrame = window.requestAnimationFrame(renderEndingFireworks);
+                }
+            }).catch((error) => {
+                console.error('Could not play the closing fireworks overlay.', error);
+            });
+        }
+
+        function pauseEndingFireworks() {
+            endingFireworksVideo.pause();
+            if (endingFireworksFrame !== null) {
+                window.cancelAnimationFrame(endingFireworksFrame);
+                endingFireworksFrame = null;
+            }
+        }
+
+        function burstHeart() {
+            archeryTargetHeart.classList.add('heart-burst');
+            archeryStatus.textContent = 'Bullseye! Sending a little love your way 💖';
+            const symbols = ['💖', '💕', '💗', '❤️', '💘', '💝'];
+            for (let index = 0; index < 22; index += 1) {
+                const symbol = document.createElement('span');
+                symbol.className = 'love-fall';
+                symbol.textContent = symbols[index % symbols.length];
+                symbol.style.setProperty('--love-x', `${8 + Math.random() * 84}%`);
+                symbol.style.setProperty('--love-y', `${Math.random() * 35}%`);
+                symbol.style.setProperty('--love-size', `${18 + Math.random() * 20}px`);
+                symbol.style.animationDelay = `${Math.random() * 450}ms`;
+                loveFallLayer.append(symbol);
+                window.setTimeout(() => symbol.remove(), reduceMotion ? 50 : 2800);
+            }
+            archeryAdvanceTimer = window.setTimeout(() => {
+                showStage(birthdayStage);
+                burstConfetti();
+                window.setTimeout(burstConfetti, 350);
+            }, reduceMotion ? 250 : 2600);
+        }
+
+        function releaseArrow() {
+            if (archeryComplete) return;
+            archeryComplete = true;
+            archeryArrowDrag.setAttribute('aria-disabled', 'true');
+            archeryStatus.textContent = 'You let go—the arrow is flying to the heart! 💘';
+            const startX = arrowOrigin.x - arrowDirection.x * arrowPull;
+            const startY = arrowOrigin.y - arrowDirection.y * arrowPull;
+            const endX = heartPosition.x - arrowDirection.x * 64;
+            const endY = heartPosition.y - arrowDirection.y * 64;
+            const duration = reduceMotion ? 0 : 850;
+            const startTime = window.performance.now();
+
+            function flyArrow(now) {
+                const progress = duration ? Math.min(1, (now - startTime) / duration) : 1;
+                const easedProgress = 1 - (1 - progress) ** 2;
+                const x = startX + (endX - startX) * easedProgress;
+                const y = startY + (endY - startY) * easedProgress;
+                archeryArrowDrag.setAttribute('transform', `translate(${x} ${y}) rotate(${arrowAngle})`);
+                if (progress < 1) {
+                    window.requestAnimationFrame(flyArrow);
+                } else {
+                    burstHeart();
+                }
+            }
+
+            window.requestAnimationFrame(flyArrow);
+        }
+
+        archeryArrowDrag.addEventListener('pointerdown', (event) => {
+            if (archeryComplete) return;
+            const point = getArcheryPoint(event);
+            if (!point) return;
+            event.preventDefault();
+            arrowDragging = true;
+            arrowDragStart = point;
+            arrowPullAtStart = arrowPull;
+            archeryArrowDrag.setPointerCapture(event.pointerId);
+            archeryStatus.textContent = 'Pull back the arrow, then let go to shoot 💘';
+        });
+
+        archeryArrowDrag.addEventListener('pointermove', (event) => {
+            if (!arrowDragging || !arrowDragStart) return;
+            const point = getArcheryPoint(event);
+            if (!point) return;
+            const movementX = point.x - arrowDragStart.x;
+            const movementY = point.y - arrowDragStart.y;
+            const pullMovement = -(movementX * arrowDirection.x + movementY * arrowDirection.y);
+            updateArrowPull(arrowPullAtStart + pullMovement);
+        });
+
+        function finishArrowDrag(event) {
+            if (!arrowDragging) return;
+            arrowDragging = false;
+            arrowDragStart = null;
+            if (archeryArrowDrag.hasPointerCapture(event.pointerId)) archeryArrowDrag.releasePointerCapture(event.pointerId);
+            releaseArrow();
+        }
+
+        archeryArrowDrag.addEventListener('pointerup', finishArrowDrag);
+        archeryArrowDrag.addEventListener('pointercancel', finishArrowDrag);
+        archeryArrowDrag.addEventListener('keydown', (event) => {
+            const step = event.shiftKey ? 20 : 10;
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                updateArrowPull(arrowPull + step);
+                archeryStatus.textContent = 'Arrow drawn—press Enter to release it at the heart 💘';
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                updateArrowPull(arrowPull - step);
+                archeryStatus.textContent = 'Arrow tension adjusted. Press Enter to shoot 💘';
+            } else if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                releaseArrow();
+            } else if (event.key === 'Home') {
+                event.preventDefault();
+                updateArrowPull(0);
+                archeryStatus.textContent = 'Pull the arrow back, then let go to shoot 💗';
+            }
+        });
+
+        updateArrowPull(0);
+
         function showStage(stage) {
-            birthdayStage.hidden = stage !== birthdayStage;
-            wishesStage.hidden = stage !== wishesStage;
-            memoriesStage.hidden = stage !== memoriesStage;
-            moreStage.hidden = stage !== moreStage;
-            cakeStage.hidden = stage !== cakeStage;
-            giftsStage.hidden = stage !== giftsStage;
-            if (!reduceMotion) celebration.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            pageStages.forEach((pageStage) => {
+                pageStage.hidden = pageStage !== stage;
+            });
+            const showEnding = stage === endingStage;
+            document.body.classList.toggle('cinematic-mode', showEnding);
+            if (showEnding) {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            } else {
+                pauseEndingFireworks();
+                celebration.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+            }
+            if (stage === memoriesStage) {
+                memoriesVideo.play().catch(() => {
+                    memoryVideoStatus.textContent = 'This video could not start automatically. Use the video controls to play it.';
+                    memoryVideoStatus.hidden = false;
+                });
+            } else {
+                memoriesVideo.pause();
+            }
         }
 
         document.getElementById('to-wishes').addEventListener('click', () => showStage(wishesStage));
-        document.getElementById('to-memories').addEventListener('click', () => {
-            showStage(memoriesStage);
+        document.getElementById('to-story').addEventListener('click', () => showStage(storyStage));
+        document.getElementById('to-song').addEventListener('click', () => {
+            showStage(songStage);
             playBirthdaySong();
         });
+        document.getElementById('to-memories').addEventListener('click', () => showStage(memoriesStage));
         document.getElementById('to-more').addEventListener('click', () => showStage(moreStage));
-        document.getElementById('to-cake').addEventListener('click', () => {
-            showStage(cakeStage);
-            startCakeSurprise();
-        });
+        document.getElementById('to-cake').addEventListener('click', () => showStage(cakeStage));
         document.getElementById('to-gifts').addEventListener('click', () => showStage(giftsStage));
+
+        const letterParagraphs = Array.from(document.querySelectorAll('.letter-paragraph'));
+        const toEndingButton = document.getElementById('to-ending');
+        function openSecretLetter() {
+            letterTimers.forEach((timer) => window.clearTimeout(timer));
+            letterTimers = [];
+            letterParagraphs.forEach((paragraph) => {
+                paragraph.hidden = true;
+                paragraph.classList.remove('is-visible');
+            });
+            toEndingButton.hidden = true;
+            showStage(letterStage);
+
+            letterParagraphs.forEach((paragraph, index) => {
+                const timer = window.setTimeout(() => {
+                    paragraph.hidden = false;
+                    window.requestAnimationFrame(() => paragraph.classList.add('is-visible'));
+                    if (index === letterParagraphs.length - 1) toEndingButton.hidden = false;
+                }, reduceMotion ? 0 : index * 1450);
+                letterTimers.push(timer);
+            });
+        }
+
+        document.getElementById('open-letter').addEventListener('click', openSecretLetter);
+
+        const endingReplayButton = document.getElementById('ending-replay');
+        function startEnding() {
+            window.clearTimeout(endingReplayTimer);
+            endingRevealTimers.forEach((timer) => window.clearTimeout(timer));
+            endingRevealTimers = [];
+            endingStage.classList.remove('is-revealed');
+            endingStage.classList.remove('is-final-revealed');
+            document.getElementById('ending-final-line').hidden = true;
+            endingReplayButton.hidden = true;
+            endingReplayButton.classList.remove('is-visible');
+            showStage(endingStage);
+            fadeBirthdayMusic();
+            const fadeDuration = reduceMotion ? 0 : 1800;
+            const startFireworks = window.setTimeout(playEndingFireworks, fadeDuration + 200);
+            const revealFirstLine = window.setTimeout(() => endingStage.classList.add('is-revealed'), fadeDuration);
+            const revealFinalLine = window.setTimeout(() => {
+                document.getElementById('ending-final-line').hidden = false;
+                window.requestAnimationFrame(() => endingStage.classList.add('is-final-revealed'));
+            }, fadeDuration + (reduceMotion ? 400 : 3000));
+            const revealReplayButton = window.setTimeout(() => {
+                endingReplayButton.hidden = false;
+                window.requestAnimationFrame(() => endingReplayButton.classList.add('is-visible'));
+            }, fadeDuration + (reduceMotion ? 1200 : 6200));
+            endingRevealTimers.push(startFireworks, revealFirstLine, revealFinalLine, revealReplayButton);
+        }
+
+        toEndingButton.addEventListener('click', startEnding);
+        endingReplayButton.addEventListener('click', openSecretLetter);
 
         const giftConfirmation = document.getElementById('gift-confirmation');
         const giftConfirmationMessage = document.getElementById('gift-confirmation-message');
@@ -462,18 +1040,34 @@
             });
         });
 
-        let birthdayAudioContext;
-        let songTimeout;
-        function playBirthdaySong() {
+        function getBirthdayAudioContext() {
             const AudioContextClass = window.AudioContext || window.webkitAudioContext;
             if (!AudioContextClass) {
                 musicStatus.textContent = 'This browser does not support the birthday tune. Try another browser 🎵';
+                return null;
+            }
+
+            birthdayAudioContext ??= new AudioContextClass();
+            return birthdayAudioContext;
+        }
+
+        async function playBirthdaySong() {
+            const audioContext = getBirthdayAudioContext();
+            if (!audioContext) return;
+            try {
+                await audioContext.resume();
+            } catch (error) {
+                musicStatus.textContent = 'Your birthday song could not start. Tap play to try again 🎵';
                 return;
             }
 
             window.clearTimeout(songTimeout);
-            birthdayAudioContext ??= new AudioContextClass();
-            birthdayAudioContext.resume();
+            if (!birthdayMusicGain) {
+                birthdayMusicGain = audioContext.createGain();
+                birthdayMusicGain.connect(audioContext.destination);
+            }
+            birthdayMusicGain.gain.cancelScheduledValues(audioContext.currentTime);
+            birthdayMusicGain.gain.setValueAtTime(1, audioContext.currentTime);
 
             const beat = 0.38;
             const melody = [
@@ -483,12 +1077,12 @@
                 ['F5', .5], ['F5', .5], ['E5', 1], ['C5', 1], ['D5', 1], ['C5', 2]
             ];
             const frequencies = { G4: 392, A4: 440, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99 };
-            let startAt = birthdayAudioContext.currentTime + 0.08;
+            let startAt = audioContext.currentTime + 0.08;
 
             melody.forEach(([note, beats]) => {
                 const duration = beats * beat;
-                const oscillator = birthdayAudioContext.createOscillator();
-                const volume = birthdayAudioContext.createGain();
+                const oscillator = audioContext.createOscillator();
+                const volume = audioContext.createGain();
                 oscillator.type = 'sine';
                 oscillator.frequency.value = frequencies[note];
                 volume.gain.setValueAtTime(0, startAt);
@@ -496,7 +1090,7 @@
                 volume.gain.setValueAtTime(0.16, startAt + duration * 0.72);
                 volume.gain.linearRampToValueAtTime(0, startAt + duration * 0.92);
                 oscillator.connect(volume);
-                volume.connect(birthdayAudioContext.destination);
+                volume.connect(birthdayMusicGain);
                 oscillator.start(startAt);
                 oscillator.stop(startAt + duration);
                 startAt += duration;
@@ -505,10 +1099,16 @@
             musicStatus.textContent = 'Now playing your birthday song! 🎂🎶';
             songTimeout = window.setTimeout(() => {
                 musicStatus.textContent = 'Your birthday song is ready to play again! 💖';
-            }, Math.max(0, (startAt - birthdayAudioContext.currentTime) * 1000));
+            }, Math.max(0, (startAt - audioContext.currentTime) * 1000));
         }
 
-        document.getElementById('replay-song').addEventListener('click', playBirthdaySong);
+        function fadeBirthdayMusic() {
+            if (!birthdayAudioContext || !birthdayMusicGain) return;
+            const fadeAt = birthdayAudioContext.currentTime;
+            birthdayMusicGain.gain.cancelScheduledValues(fadeAt);
+            birthdayMusicGain.gain.setValueAtTime(birthdayMusicGain.gain.value, fadeAt);
+            birthdayMusicGain.gain.linearRampToValueAtTime(0, fadeAt + 2.5);
+        }
 
         birthdayForm.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -520,10 +1120,7 @@
 
             gate.hidden = true;
             celebration.hidden = false;
-            showStage(birthdayStage);
-            burstConfetti();
-            window.setTimeout(burstConfetti, 350);
-            window.setTimeout(burstConfetti, 800);
+            showStage(archeryStage);
         });
     </script>
 </body>
