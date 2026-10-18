@@ -255,84 +255,10 @@
             animation: ending-fade-to-black 1.8s ease both;
         }
         .ending-stage::before { position: absolute; z-index: 0; inset: -18px; background: url("ending-photo.png") center / cover no-repeat; content: ""; filter: blur(16px) brightness(.42); transform: scale(1.04); }
-        .ending-photo { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; filter: brightness(.86) saturate(.92); }
+        .ending-photo { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; filter: brightness(.95) saturate(1.15) contrast(1.02); }
         .ending-content { position: relative; z-index: 5; width: min(100%, 760px); margin-bottom: clamp(8px, 4vh, 32px); }
-        .ending-fireworks-canvas { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-        .ending-fireworks-source { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .05; pointer-events: none; }
-        .ending-cracker {
-            position: absolute;
-            z-index: 4;
-            top: clamp(52px, 9vh, 92px);
-            width: 1px;
-            height: 1px;
-            color: #ffd166;
-            pointer-events: none;
-        }
-        .ending-cracker-left { left: clamp(42px, 12vw, 150px); }
-        .ending-cracker-right { right: clamp(42px, 12vw, 150px); color: #ff8fab; }
-        .ending-cracker::before {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: currentColor;
-            box-shadow: 0 0 12px 4px currentColor, 0 0 36px 12px rgba(255, 255, 255, .45);
-            content: "";
-            transform: translate(-50%, -50%);
-            animation: cracker-flash 2.4s ease-out infinite;
-        }
-        .ending-cracker::after {
-            position: absolute;
-            bottom: -38px;
-            left: 0;
-            width: 2px;
-            height: 34px;
-            background: linear-gradient(to bottom, transparent, currentColor);
-            content: "";
-            opacity: 0;
-            transform: translateY(24px);
-            animation: cracker-launch 2.4s ease-out infinite;
-        }
-        .ending-cracker span {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 16px;
-            border-radius: 999px;
-            background: currentColor;
-            box-shadow: 0 0 9px 2px currentColor;
-            opacity: 0;
-            transform-origin: center 0;
-            animation: cracker-spark 2.4s ease-out infinite;
-        }
-        .ending-cracker span:nth-child(2n) { color: #fff0a6; }
-        .ending-cracker-right span:nth-child(2n) { color: #ffd1dc; }
-        .ending-cracker span:nth-child(1) { --spark-angle: 0deg; }
-        .ending-cracker span:nth-child(2) { --spark-angle: 45deg; }
-        .ending-cracker span:nth-child(3) { --spark-angle: 90deg; }
-        .ending-cracker span:nth-child(4) { --spark-angle: 135deg; }
-        .ending-cracker span:nth-child(5) { --spark-angle: 180deg; }
-        .ending-cracker span:nth-child(6) { --spark-angle: 225deg; }
-        .ending-cracker span:nth-child(7) { --spark-angle: 270deg; }
-        .ending-cracker span:nth-child(8) { --spark-angle: 315deg; }
-        .ending-cracker-right::before, .ending-cracker-right::after,
-        .ending-cracker-right span { animation-delay: 1.2s; }
-        @keyframes cracker-launch {
-            0%, 12% { opacity: 0; transform: translateY(24px); }
-            24% { opacity: .9; }
-            48%, 100% { opacity: 0; transform: translateY(-16px); }
-        }
-        @keyframes cracker-flash {
-            0%, 32%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.2); }
-            40% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
-            52% { opacity: .75; transform: translate(-50%, -50%) scale(.8); }
-        }
-        @keyframes cracker-spark {
-            0%, 35%, 100% { opacity: 0; transform: rotate(var(--spark-angle)) translateY(0) scale(.2); }
-            43% { opacity: 1; }
-            70% { opacity: .8; transform: rotate(var(--spark-angle)) translateY(-48px) scale(1); }
-        }
+        .ending-bubbles-canvas { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .ending-bubbles-source { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
         .ending-line { margin: 0; color: #fff8fb; font-family: 'Dancing Script', cursive; font-size: clamp(1.65rem, 5vw, 3.2rem); line-height: 1.25; text-shadow: 0 3px 28px rgba(0,0,0,.45); opacity: 0; transform: translateY(12px); transition: opacity 1.8s ease, transform 1.8s ease; }
         .ending-final-line { margin-top: clamp(14px, 3vh, 30px); font-size: clamp(1.5rem, 4vw, 2.5rem); }
         .ending-stage.is-revealed #ending-line, .ending-stage.is-final-revealed #ending-final-line { opacity: 1; transform: translateY(0); }
@@ -398,7 +324,6 @@
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
-            .ending-cracker span { animation: none !important; opacity: .9; transform: rotate(var(--spark-angle)) translateY(-26px); }
         }
     </style>
 </head>
@@ -628,10 +553,8 @@
 
             <section class="ending-stage" id="ending-stage" aria-label="A final birthday message" hidden>
                 <img class="ending-photo" src="ending-photo.png" alt="">
-                <canvas class="ending-fireworks-canvas" id="ending-fireworks-canvas" aria-hidden="true"></canvas>
-                <video class="ending-fireworks-source" id="ending-fireworks-source" src="fireworks-overlay.mp4" muted loop playsinline preload="metadata" aria-hidden="true"></video>
-                <div class="ending-cracker ending-cracker-left" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                <div class="ending-cracker ending-cracker-right" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <canvas class="ending-bubbles-canvas" id="ending-bubbles-canvas" aria-hidden="true"></canvas>
+                <video class="ending-bubbles-source" id="ending-bubbles-source" src="heart-love-bubbles.mp4" muted loop playsinline preload="metadata" aria-hidden="true"></video>
                 <div class="ending-content" aria-live="polite">
                     <p class="ending-line" id="ending-line">You reached the end of this website… but I hope this isn't the end of the memories we make.</p>
                     <p class="ending-line ending-final-line" id="ending-final-line" hidden>Happy birthday, MY MESSY. I'm glad you're in my life. ❤️</p>
@@ -661,16 +584,16 @@
         const giftsStage = document.getElementById('gifts-stage');
         const letterStage = document.getElementById('letter-stage');
         const endingStage = document.getElementById('ending-stage');
-        const endingFireworksVideo = document.getElementById('ending-fireworks-source');
-        const endingFireworksCanvas = document.getElementById('ending-fireworks-canvas');
+        const endingBubblesVideo = document.getElementById('ending-bubbles-source');
+        const endingBubblesCanvas = document.getElementById('ending-bubbles-canvas');
         const pageStages = [archeryStage, birthdayStage, wishesStage, storyStage, songStage, memoriesStage, moreStage, cakeStage, giftsStage, letterStage, endingStage];
         const musicStatus = document.getElementById('music-status');
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         let letterTimers = [];
         let endingReplayTimer;
         let endingRevealTimers = [];
-        let endingFireworksRenderer;
-        let endingFireworksFrame = null;
+        let endingBubblesRenderer;
+        let endingBubblesFrame = null;
         let birthdayMusicGain;
         let birthdayAudioContext;
         let songTimeout;
@@ -726,10 +649,10 @@
             return point.matrixTransform(matrix.inverse());
         }
 
-        function createEndingFireworksRenderer() {
-            const gl = endingFireworksCanvas.getContext('webgl', { alpha: true, premultipliedAlpha: true });
+        function createEndingBubblesRenderer() {
+            const gl = endingBubblesCanvas.getContext('webgl', { alpha: true, premultipliedAlpha: true });
             if (!gl) {
-                console.error('The closing fireworks overlay requires WebGL, which is unavailable in this browser.');
+                console.error('The closing heart-bubbles overlay requires WebGL, which is unavailable in this browser.');
                 return null;
             }
 
@@ -740,7 +663,7 @@
                 if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
                     const message = gl.getShaderInfoLog(shader);
                     gl.deleteShader(shader);
-                    throw new Error(`Could not compile closing fireworks shader: ${message}`);
+                    throw new Error(`Could not compile closing heart-bubbles shader: ${message}`);
                 }
                 return shader;
             }
@@ -750,7 +673,7 @@
             gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float; varying vec2 textureCoordinate; uniform sampler2D videoFrame; void main() { vec3 color = texture2D(videoFrame, textureCoordinate).rgb; float greenScreen = color.g - max(color.r, color.b); float alpha = 1.0 - smoothstep(0.08, 0.30, greenScreen); alpha *= smoothstep(0.015, 0.08, max(color.r, max(color.g, color.b))); gl_FragColor = vec4(color * alpha, alpha); }'));
             gl.linkProgram(program);
             if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-                throw new Error(`Could not link closing fireworks shader: ${gl.getProgramInfoLog(program)}`);
+                throw new Error(`Could not link closing heart-bubbles shader: ${gl.getProgramInfoLog(program)}`);
             }
 
             gl.useProgram(program);
@@ -773,54 +696,54 @@
             return { gl, texture };
         }
 
-        function configureEndingFireworksCanvas() {
-            const { gl } = endingFireworksRenderer;
+        function configureEndingBubblesCanvas() {
+            const { gl } = endingBubblesRenderer;
             const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
             const width = Math.max(1, Math.round(endingStage.clientWidth * pixelRatio));
             const height = Math.max(1, Math.round(endingStage.clientHeight * pixelRatio));
-            if (endingFireworksCanvas.width !== width || endingFireworksCanvas.height !== height) {
-                endingFireworksCanvas.width = width;
-                endingFireworksCanvas.height = height;
+            if (endingBubblesCanvas.width !== width || endingBubblesCanvas.height !== height) {
+                endingBubblesCanvas.width = width;
+                endingBubblesCanvas.height = height;
             }
             gl.viewport(0, 0, width, height);
             return true;
         }
 
-        function renderEndingFireworks() {
-            if (endingStage.hidden || endingFireworksVideo.paused) {
-                endingFireworksFrame = null;
+        function renderEndingBubbles() {
+            if (endingStage.hidden || endingBubblesVideo.paused) {
+                endingBubblesFrame = null;
                 return;
             }
 
-            const { gl, texture } = endingFireworksRenderer;
-            configureEndingFireworksCanvas();
-            if (endingFireworksVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+            const { gl, texture } = endingBubblesRenderer;
+            configureEndingBubblesCanvas();
+            if (endingBubblesVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
                 gl.activeTexture(gl.TEXTURE0);
                 gl.bindTexture(gl.TEXTURE_2D, texture);
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, endingFireworksVideo);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, endingBubblesVideo);
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
             }
-            endingFireworksFrame = window.requestAnimationFrame(renderEndingFireworks);
+            endingBubblesFrame = window.requestAnimationFrame(renderEndingBubbles);
         }
 
-        function playEndingFireworks() {
-            endingFireworksRenderer ||= createEndingFireworksRenderer();
-            if (!endingFireworksRenderer) return;
-            configureEndingFireworksCanvas();
-            endingFireworksVideo.play().then(() => {
-                if (endingFireworksFrame === null) {
-                    endingFireworksFrame = window.requestAnimationFrame(renderEndingFireworks);
+        function playEndingBubbles() {
+            endingBubblesRenderer ||= createEndingBubblesRenderer();
+            if (!endingBubblesRenderer) return;
+            configureEndingBubblesCanvas();
+            endingBubblesVideo.play().then(() => {
+                if (endingBubblesFrame === null) {
+                    endingBubblesFrame = window.requestAnimationFrame(renderEndingBubbles);
                 }
             }).catch((error) => {
-                console.error('Could not play the closing fireworks overlay.', error);
+                console.error('Could not play the closing heart-bubbles overlay.', error);
             });
         }
 
-        function pauseEndingFireworks() {
-            endingFireworksVideo.pause();
-            if (endingFireworksFrame !== null) {
-                window.cancelAnimationFrame(endingFireworksFrame);
-                endingFireworksFrame = null;
+        function pauseEndingBubbles() {
+            endingBubblesVideo.pause();
+            if (endingBubblesFrame !== null) {
+                window.cancelAnimationFrame(endingBubblesFrame);
+                endingBubblesFrame = null;
             }
         }
 
@@ -937,7 +860,7 @@
             if (showEnding) {
                 window.scrollTo({ top: 0, behavior: 'auto' });
             } else {
-                pauseEndingFireworks();
+                pauseEndingBubbles();
                 celebration.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
             }
             if (stage === memoriesStage) {
@@ -998,7 +921,7 @@
             showStage(endingStage);
             fadeBirthdayMusic();
             const fadeDuration = reduceMotion ? 0 : 1800;
-            const startFireworks = window.setTimeout(playEndingFireworks, fadeDuration + 200);
+            const startBubbles = window.setTimeout(playEndingBubbles, fadeDuration + 200);
             const revealFirstLine = window.setTimeout(() => endingStage.classList.add('is-revealed'), fadeDuration);
             const revealFinalLine = window.setTimeout(() => {
                 document.getElementById('ending-final-line').hidden = false;
@@ -1008,7 +931,7 @@
                 endingReplayButton.hidden = false;
                 window.requestAnimationFrame(() => endingReplayButton.classList.add('is-visible'));
             }, fadeDuration + (reduceMotion ? 1200 : 6200));
-            endingRevealTimers.push(startFireworks, revealFirstLine, revealFinalLine, revealReplayButton);
+            endingRevealTimers.push(startBubbles, revealFirstLine, revealFinalLine, revealReplayButton);
         }
 
         toEndingButton.addEventListener('click', startEnding);
